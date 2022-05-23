@@ -2,10 +2,10 @@
 ** Emacs Settings
 Increase garbage collection 
 #+begin_src emacs-lisp
-  (setq debug-on-error 1)
-    (eval-and-compile
-      (setq gc-cons-threshold 16777216
-	    gc-cons-percentage 0.1))
+    (setq debug-on-error 1)
+      (eval-and-compile
+	(setq gc-cons-threshold 16777216
+	      gc-cons-percentage 0.1))
 #+end_src
 
 #+RESULTS:
@@ -112,7 +112,8 @@ The next block is taken from here: https://github.com/frap/emacs-literate
 
 #+RESULTS:
 
-** apperance-lisp
+** apperance
+#+begin_src emacs-lisp
   (defun my/apply-theme (appearance)
     "Load theme, taking current system APPEARANCE into consideration."
     (mapc #'disable-theme custom-enabled-themes)
@@ -124,6 +125,7 @@ The next block is taken from here: https://github.com/frap/emacs-literate
 #+end_src
 
 #+RESULTS:
+| my/apply-theme |
 
 ** Font
 #+begin_src emacs-lisp
@@ -207,6 +209,24 @@ For now I'm cherry picking what I want
 #+RESULTS:
 : t
 
+** Packages
+#+begin_src emacs-lisp
+  (unless (package-installed-p 'quelpa)
+  (with-temp-buffer
+    (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
+    (eval-buffer)
+    (quelpa-self-upgrade)))
+#+end_src
+This package allow to use ~use-package~ with links to source
+
+#+begin_src emacs-lisp
+  (quelpa
+ '(quelpa-use-package
+   :fetcher git
+   :url "https://github.com/quelpa/quelpa-use-package.git"))
+(require 'quelpa-use-package)
+#+end_src
+
 * Completion
 I choose Vertico due to its simplicity and being light weight
 #+begin_src emacs-lisp
@@ -265,7 +285,7 @@ Wrap text
 #+end_src
 
 #+RESULTS:
-| (lambda nil (org-superstar-mode 1)) | visual-line-mode | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes |
+| visual-line-mode | turn-on-org-cdlatex | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes |
 
 This remove the emphasis markers like ~=,/,*~
 #+begin_src emacs-lisp
@@ -289,7 +309,9 @@ This package replace the heading with UTF-8 symbols
 Use proportional font with different sizes for the heading
 #+begin_src emacs-lisp
   (let* ((variable-tuple
-	    (cond ((x-list-fonts "Arial")         '(:font "Arial"))
+	    (cond                 
+		  ((x-list-fonts "JetBrains Mono")  '(:font "JetBrains Mono"))
+		  ((x-list-fonts "Arial")           '(:font "Arial"))
 		  ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
 		  ((x-list-fonts "Lucida Grande")   '(:font "Lucida Grande"))
 		  ((x-list-fonts "Verdana")         '(:font "Verdana"))
@@ -304,11 +326,11 @@ Use proportional font with different sizes for the heading
        `(org-level-7 ((t (,@headline ,@variable-tuple))))
        `(org-level-6 ((t (,@headline ,@variable-tuple))))
        `(org-level-5 ((t (,@headline ,@variable-tuple))))
-       `(org-level-4 ((t (,@headline ,@variable-tuple :height 0.1))))
-       `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.1))))
+       `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
+       `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.2))))
        `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.25))))
        `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.35))))
-       `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil)))))
+       `(org-document-title ((t (,@headline ,@variable-tuple :height 1.5 :underline nil)))))
      )
 #+end_src
 
@@ -316,31 +338,68 @@ Use proportional font with different sizes for the heading
 
 #+begin_src emacs-lisp
 
-  (custom-theme-set-faces
-   'user
-   '(variable-pitch ((t (:family "Arial" :height 150 :weight Normal))))
-   '(fixed-pitch ((t ( :family "JetBrains Mono" :height 150))))
-   '(org-block ((t (:inherit fixed-pitch))))
-   '(org-code ((t (:inherit (shadow fixed-pitch)))))
-   '(org-document-info ((t (:foreground "dark orange"))))
-   '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
-   '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
-   '(org-link ((t (:foreground "royal blue" :underline t))))
-   '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-   '(org-property-value ((t (:inherit fixed-pitch))) t)
-   '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-   '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
-   '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
-   '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+  ;; (custom-theme-set-faces
+  ;;  'user
+  ;;  '(variable-pitch ((t (:family "Arial" :height 150 :weight Normal))))
+  ;;  '(fixed-pitch ((t ( :family "JetBrains Mono" :height 150))))
+  ;;  '(org-block ((t (:inherit fixed-pitch))))
+  ;;  '(org-code ((t (:inherit (shadow fixed-pitch)))))
+  ;;  '(org-document-info ((t (:foreground "dark orange"))))
+  ;;  '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+  ;;  '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+  ;;  '(org-link ((t (:foreground "royal blue" :underline t))))
+  ;;  '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+  ;;  '(org-property-value ((t (:inherit fixed-pitch))) t)
+  ;;  '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+  ;;  '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
+  ;;  '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 1))))
+  ;;  '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
-  (custom-theme-set-faces
-   'user
-   '(variable-pitch ((t (:family "Arial" :height 180 :weight thin))))
-   '(fixed-pitch ((t ( :family "Fira Code" :height 160)))))
-    (add-hook 'org-mode-hook 'variable-pitch-mode)
+  ;;   (add-hook 'org-mode-hook 'variable-pitch-mode)
 #+end_src
 
 #+RESULTS:
+Insert images from clipboard
+#+begin_src emacs-lisp
+  (use-package org-download
+    :ensure t
+    :after org
+    :defer nil
+    :custom
+    (org-download-method 'directory)
+    (org-download-image-dir "images")
+    (org-download-heading-lvl nil)
+    (org-download-timestamp "%Y%m%d-%H%M%S_")
+    (org-image-actual-width 300)
+    (org-download-screenshot-method "/usr/local/bin/pngpaste %s")
+    :bind
+    ("C-M-y" . org-download-screenshot)
+    :config
+    (require 'org-download))
+#+end_src
+
+#+RESULTS:
+: org-download-screenshot
+
+
+#+begin_src emacs-lisp
+;;  (add-hook 'org-cdlatex-mode-hook
+;;	     (lambda ()
+;;   (local-set-key (kbd "$") 'cdlatex-dollar)))
+#+end_src
+
+#+RESULTS:
+| lambda | nil | (local-set-key (kbd $) 'cdlatex-dollar) |
+
+
+#+begin_src emacs-lisp
+(setq org-preview-latex-default-process 'dvyisvgm)
+(setq org-latex-create-formula-image-program 'dvisvgm)
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+#+end_src
+
+#+RESULTS:
+| :foreground | default | :background | default | :scale | 2.0 | :html-foreground | Black | :html-background | Transparent | :html-scale | 1.0 | :matchers | (begin $1 $ $$ \( \[) |
 
 ** Org-roam
 #+begin_src emacs-lisp
@@ -377,13 +436,13 @@ Use proportional font with different sizes for the heading
   (org-roam-db-autosync-mode)
   ;; If using org-roam-protocol
   (require 'org-roam-protocol))
-  
+
     ;; (org-roam-dailies-directory "journals/")
     ;; (org-roam-capture-templates
     ;; '(("d" "default" plain
     ;;  #'org-roam-capture--get-point "%?"
     ;;  :file-name "pages/${slug}" :head "#+title: ${title}\n" :unnarrowed t))))
-  
+
 #+end_src
 
 #+RESULTS:
@@ -391,35 +450,47 @@ Use proportional font with different sizes for the heading
 * LaTeX
 ** AUCTEX
 #+begin_src emacs-lisp
-(use-package latex
-  :ensure auctex
-  :hook ((LaTeX-mode . prettify-symbols-mode))
-  :bind (:map LaTeX-mode-map
-         ("C-S-e" . latex-math-from-calc))
-  :config
-  ;; Format math as a Latex string with Calc
-  (defun latex-math-from-calc ()
-    "Evaluate `calc' on the contents of line at point."
-    (interactive)
-    (cond ((region-active-p)
-           (let* ((beg (region-beginning))
-                  (end (region-end))
-                  (string (buffer-substring-no-properties beg end)))
-             (kill-region beg end)
-             (insert (calc-eval `(,string calc-language latex
-                                          calc-prefer-frac t
-                                          calc-angle-mode rad)))))
-          (t (let ((l (thing-at-point 'line)))
-               (end-of-line 1) (kill-line 0) 
-               (insert (calc-eval `(,l
-                                    calc-language latex
-                                    calc-prefer-frac t
-                                    calc-angle-mode rad))))))))
+  (use-package latex
+    :ensure auctex
+    :hook ((LaTeX-mode . prettify-symbols-mode))
+    :bind (:map LaTeX-mode-map
+	   ("C-S-e" . latex-math-from-calc))
+    :config
+    ;; Format math as a Latex string with Calc
+    (defun latex-math-from-calc ()
+      "Evaluate `calc' on the contents of line at point."
+      (interactive)
+      (cond ((region-active-p)
+	     (let* ((beg (region-beginning))
+		    (end (region-end))
+		    (string (buffer-substring-no-properties beg end)))
+	       (kill-region beg end)
+	       (insert (calc-eval `(,string calc-language latex
+					    calc-prefer-frac t
+					    calc-angle-mode rad)))))
+	    (t (let ((l (thing-at-point 'line)))
+		 (end-of-line 1) (kill-line 0) 
+		 (insert (calc-eval `(,l
+				      calc-language latex
+				      calc-prefer-frac t
+				      calc-angle-mode rad))))))))
+
+   (add-hook 'LaTeX-mode-hook 'turn-on-cdlatex)
+   (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
+
 
 #+end_src
 
 #+RESULTS:
+| (lambda nil (org-superstar-mode 1)) | visual-line-mode | turn-on-org-cdlatex | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes | f |
 
+#+begin_src emacs-lisp
+  (set-default 'preview-scale-function 1.2)
+#+end_src
+
+#+RESULTS:
+: 1.2
+https://github.com/purcell/exec-path-from-shell
 #+begin_src emacs-lisp
 (setenv "PATH" (concat "/usr/local/texlive/2022/bin/universal-darwin:" (getenv "PATH")))
 (setq exec-path (append '("/usr/local/texlive/2022/bin/universal-darwin:") exec-path))
@@ -427,6 +498,60 @@ Use proportional font with different sizes for the heading
 
 #+RESULTS:
 | /usr/local/texlive/2022/bin/universal-darwin: | /usr/local/texlive/2022/bin/universal-darwin: | /Applications/Visual Studio Code.app/Contents/Resources/app/bin | /opt/homebrew/bin | /opt/homebrew/sbin | /usr/local/bin | /usr/bin | /bin | /usr/sbin | /sbin | /Library/Apple/usr/bin | /opt/homebrew/Cellar/emacs-plus@29/29.0.50/libexec/emacs/29.0.50/aarch64-apple-darwin21.3.0 |
+
+Add more symbols to ~cdlatex-math-symbol-alist~, make sure to ~cdlatex-reset-mode~ if the list is modifed after cdlatex has been loaded
+
+#+begin_src emacs-lisp
+  (setq cdlatex-env-alist '(
+	("axiom" "\\begin{axiom}\nAUTOLABEL\n?\n\\end{axiom}\n" nil)
+	("theorem" "\\begin{theorem}\nAUTOLABEL\n?\n\\end{theorem}\n" nil)
+	("definition" "\\begin{definition}\nAUTOLABEL\n?\n\\end{definition}\n" nil)
+	("remark" "\\begin{remark}\nAUTOLABEL\n?\n\\end{remark}\n" nil)
+	("lemma" "\\begin{lemma}\nAUTOLABEL\n?\n\\end{lemma}\n" nil)
+	("corollary" "\\begin{corollary}\nAUTOLABEL\n?\n\\end{corollary}\n" nil)
+	("proof" "\\begin{proof}\nAUTOLABEL\n?\n\\end{proof}\n" nil)
+	("example" "\\begin{example}\nAUTOLABEL\n?\n\\end{example}\n" nil)
+
+	))
+
+  (setq cdlatex-command-alist '(
+	("axm" "Insert axiom env"   "" cdlatex-environment ("axiom") t nil)
+	("thr" "Insert theorem env" "" cdlatex-environment ("theorem") t nil)
+	("def" "Insert definition env" "" cdlatex-environment ("definition") t nil)
+	("rem" "Insert remark env" "" cdlatex-environment ("remark") t nil)
+	("lem" "Insert lemma env" "" cdlatex-environment ("lemma") t nil)
+	("cor" "Insert corollary env" "" cdlatex-environment ("corollary") t nil)
+	("pro" "Insert proof env" "" cdlatex-environment ("proof") t nil)
+	("ex" "Insert example env" "" cdlatex-environment ("example") t nil)
+
+	))
+#+end_src
+
+#+begin_src emacs-lisp
+  (setq cdlatex-math-symbol-alist '(
+		(?n  ("\\nu" "\\lnot" "\\ln"))
+		))
+  (require 'cdlatex)
+#+end_src
+
+** Math delimiters
+#+begin_src emacs-lisp
+  (use-package math-delimiters
+    :quelpa (math-delimiters :fetcher github :repo "oantolin/math-delimiters")
+    :init
+    (with-eval-after-load 'latex
+    (define-key LaTeX-mode-map "$" #'math-delimiters-insert))
+    (with-eval-after-load 'org
+    (define-key org-mode-map "$" #'math-delimiters-insert))
+    )
+#+end_src
+
+** Fast latex previews in Org
+#+begin_src emacs-lisp
+  (use-package org-auctex
+    :quelpa (org-auctex :fetcher github :repo "/karthink/org-auctex")
+    )
+#+end_src
 
 * Spell checker
 #+begin_src emacs-lisp
@@ -445,3 +570,151 @@ Use proportional font with different sizes for the heading
 
 
 
+
+* Feeds
+#+begin_src emacs-lisp
+  (use-package elfeed
+  :ensure t
+  :hook ((text-mode . flycheck-languagetool-setup)
+	 (org-mode . flycheck-languagetool-setup))
+  :init
+  (run-at-time nil (* 8 60 60) #'elfeed-update)
+  (global-set-key (kbd "C-x w") 'elfeed)
+  )
+
+  (use-package elfeed-org
+  :ensure t
+  :init
+  (setq rmh-elfeed-org-files (list "~/.emacs.d/elfeed.org"))
+  )
+#+end_src
+
+from https://cundy.me/post/elfeed/
+
+# #+begin_src emacs-lisp
+#       (defun concatenate-authors (authors-list)
+#       "Given AUTHORS-LIST, list of plists; return string of all authors
+#     concatenated."
+#       (mapconcat
+#        (lambda (author) (plist-get author :name))
+#        authors-list ", "))
+  
+#     (defun my-search-print-fn (entry)
+#     "Print ENTRY to the buffer."
+#     (let* ((date (elfeed-search-format-date (elfeed-entry-date entry)))
+# 	   (title (or (elfeed-meta entry :title)
+# 		      (elfeed-entry-title entry) ""))
+# 	   (title-faces (elfeed-search--faces (elfeed-entry-tags entry)))
+# 	   (feed (elfeed-entry-feed entry))
+# 	   (feed-title
+# 	    (when feed
+# 	      (or (elfeed-meta feed :title) (elfeed-feed-title feed))))
+# 	   (entry-authors (concatenate-authors
+# 			   (elfeed-meta entry :authors)))
+# 	   (tags (mapcar #'symbol-name (elfeed-entry-tags entry)))
+# 	   (tags-str (mapconcat
+# 		      (lambda (s) (propertize s 'face
+# 					      'elfeed-search-tag-face))
+# 		      tags ","))
+# 	   (title-width (+ (window-width) 10
+# 			   elfeed-search-trailing-width))
+# 	   (title-column (elfeed-format-column
+# 			  title (elfeed-clamp
+# 				 elfeed-search-title-min-width
+# 				 title-width
+# 				 140)
+# 			  :left))
+# 	   (authors-width 135)
+# 	   (authors-column (elfeed-format-column
+# 			  entry-authors (elfeed-clamp
+# 				 elfeed-search-title-min-width
+# 				 authors-width
+# 				 131)
+# 			  :left)))
+
+#       (insert (propertize date 'face 'elfeed-search-date-face) " ")
+
+#       (insert (propertize title-column
+# 			  'face title-faces 'kbd-help title) " ")
+
+#       (insert (propertize authors-column
+# 			  'face 'elfeed-search-date-face
+# 			  'kbd-help entry-authors) " ")
+
+#       ;; (when feed-title
+#       ;;   (insert (propertize entry-authors
+#       ;; 'face 'elfeed-search-feed-face) " "))
+
+#       (when entry-authors
+# 	(insert (propertize feed-title
+# 			    'face 'elfeed-search-feed-face) " "))
+
+#       ;; (when tags
+#       ;;   (insert "(" tags-str ")"))
+
+#       )
+#     )
+#   (setq elfeed-search-print-entry-function #'my-search-print-fn)
+# #+end_src
+
+#+begin_src emacs-lisp
+  
+(defun slot/arXiv ()
+  (interactive)
+  (elfeed-search-set-filter "+unread +arXiv")
+  (elfeed-score-score-search))
+
+(defun slot/elfeed-print-entry (entry)
+  (if (string-match-p "+arXiv" elfeed-search-filter)
+      (slot/arXiv-print-entry entry)
+    (elfeed-search-print-entry--default entry)))
+
+(defun slot/arXiv-print-entry (entry)
+  "Pretty print arXiv entries.
+Implementation mostly stolen from elfeed's default printing
+function; i.e., `elfeed-search-print-entry--default'."
+  (let* ((date (elfeed-search-format-date (elfeed-entry-date entry)))
+
+         (title (or (elfeed-meta entry :title)
+                    (elfeed-entry-title entry) ""))
+         (title-faces (elfeed-search--faces (elfeed-entry-tags entry)))
+         (title-column (elfeed-format-column title 80 :left))
+
+         (entry-authors (s-join ", "
+                                (--map (plist-get it :name)
+                                       (elfeed-meta entry :authors))))
+         (authors-column (elfeed-format-column entry-authors 52 :left))
+
+         (score (elfeed-format-column
+                 (format "%s" (elfeed-score-scoring-get-score-from-entry entry))
+                 4 :left))
+
+         (feed (elfeed-entry-feed entry))
+         (feed-column (let ((ft (or (elfeed-meta feed :title)
+                                    (elfeed-feed-title feed))))
+                        (elfeed-format-column
+                         (cond ((s-matches? "math.AT" ft) "Algebraic Topology")
+                               ((s-matches? "math.CT" ft) "Category Theory")
+                               ((s-matches? "math.KT" ft) "Homological Algebra")
+                               ((s-matches? "math.QA" ft) "Quantum Algebra"))
+                         (1- (length "Homological Algebra"))
+                         :left))))
+    (insert (propertize date 'face 'elfeed-search-date-face) " ")
+    (insert (propertize title-column 'face title-faces 'kbd-help title) " ")
+    (insert (propertize feed-column 'face 'elfeed-search-feed-face) " ")
+    (insert (propertize authors-column 'kbd-help entry-authors) " ")
+    (insert score " ")))
+
+(setq elfeed-search-print-entry-function #'slot/arXiv-print-entry)
+
+#+end_src
+
+** Scoring
+#+begin_src emacs-lisp
+  (use-package elfeed-score
+  :ensure t
+  :config
+  (progn
+    (elfeed-score-enable)
+    (define-key elfeed-search-mode-map "=" elfeed-score-map)))
+#+end_src
