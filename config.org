@@ -12,12 +12,12 @@ Increase garbage collection
 : 0.1
 
 Disable byte compile warnings
+
 #+begin_src emacs-lisp
 (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
 #+end_src
 
 #+RESULTS:
-| not | free-vars | unresolved | noruntime | lexical | make-local |
 
 Smooth scrolling
 #+begin_src emacs-lisp
@@ -29,84 +29,84 @@ Smooth scrolling
 
 The next block is taken from here: https://github.com/frap/emacs-literate
 #+begin_src emacs-lisp
-;;; Code:
-;; menu shit remove
-(mapc
- (lambda (mode)
-   (when (fboundp mode)
-     (funcall mode -1)))
- '(menu-bar-mode tool-bar-mode scroll-bar-mode))
+  ;;; Code:
+  ;; menu shit remove
+  (mapc
+    (lambda (mode)
+      (when (fboundp mode)
+	(funcall mode -1)))
+	'(menu-bar-mode tool-bar-mode scroll-bar-mode))
 
-;;; Initialisation
-(setq inhibit-default-init t
-      inhibit-startup-echo-area-message t
-      inhibit-startup-screen t
-      initial-scratch-message nil)
+  ;;; Initialisation
+  (setq Inhibit-Default-Init t
+	Inhibit-Startup-Echo-Area-Message t
+	inhibit-startup-screen t
+	initial-scratch-message nil)
 
-;; warn when opening files bigger than 100MB
-(setq large-file-warning-threshold 100000000)
+  ;; warn when opening files bigger than 100MB
+  (setq large-file-warning-threshold 100000000)
 
-(defconst gas-savefile-dir (expand-file-name "savefile" user-emacs-directory))
+  (defconst gas-savefile-dir (expand-file-name "savefile" user-emacs-directory))
 
-;; create the savefile dir if it doesn't exist
-(unless (file-exists-p gas-savefile-dir)
-  (make-directory gas-savefile-dir))
+  ;; create the savefile dir if it doesn't exist
+  (unless (file-exists-p gas-savefile-dir)
+    (make-directory gas-savefile-dir))
 
-;;; UI
-;; the blinking cursor is nothing, but an annoyance
-(blink-cursor-mode -1)
+  ;;; UI
+  ;; the blinking cursor is nothing, but an annoyance
+  (blink-cursor-mode -1)
 
-;; disable the annoying bell ring
-(setq ring-bell-function 'ignore)
+  ;; disable the annoying bell ring
+  (setq ring-bell-function 'ignore)
 
-;; disable startup screen
-(setq inhibit-startup-screen t)
+  ;; disable startup screen
+  (setq inhibit-startup-screen t)
 
-;; nice scrolling
-(setq scroll-margin 0
-      scroll-conservatively 100000
-      scroll-preserve-screen-position 1
-)
+  ;; nice scrolling
+  (setq scroll-margin 0
+	scroll-conservatively 100000
+	scroll-preserve-screen-position 1
+  )
 
-;; mode line settings
-(line-number-mode t)
-(column-number-mode t)
-(size-indication-mode t)
-;; enable y/n answers
-(fset 'yes-or-no-p 'y-or-n-p)
+  ;; mode line settings
+  (line-number-mode t)
+  (column-number-mode t)
+  (size-indication-mode t)
+  ;; enable y/n answers
+  (fset 'yes-or-no-p 'y-or-n-p)
 
-;; more useful frame title, that show either a file or a
-;; buffer name (if the buffer isn't visiting a file)
-(setq frame-title-format
-      '((:eval (if (buffer-file-name)
-                   (abbreviate-file-name (buffer-file-name))
-                 "%b"))))
+  ;; more useful frame title, that show either a file or a
+  ;; buffer name (if the buffer isn't visiting a file)
+  (setq frame-title-format
+	'((:eval (if (buffer-file-name)
+		     (abbreviate-file-name (buffer-file-name))
+		   "%b"))))
 
-;; Productive default mode
-(setq initial-major-mode 'org-mode)
+  ;; Productive default mode
+  (setq initial-major-mode 'org-mode)
 
-;; When on a tab, make the cursor the tab length.
-(setq-default x-stretch-cursor t)
+  ;; When on a tab, make the cursor the tab length.
+  (setq-default x-stretch-cursor t)
 
-;; Keep emacs Custom-settings in separate file.
-;; (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-;; (when (file-exists-p custom-file)
-;; (load custom-file))
+  ;; Keep emacs Custom-settings in separate file.
+  ;; (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  ;; (when (file-exists-p custom-file)
+  ;; (load custom-file))
 
-;; store all backup and autosave files in the tmp dir
-(setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
+  ;; store all backup and autosave files in the tmp dir
+  (setq backup-directory-alist
+	`((".*" . ,temporary-file-directory)))
+  (setq auto-save-file-name-transforms
+	`((".*" ,temporary-file-directory t)))
 
-;; revert buffers automatically when underlying files are changed externally
-(global-auto-revert-mode t)
+  ;; revert buffers automatically when underlying files are changed externally
+  (global-auto-revert-mode t)
 
 ;; Make backups of files, even when they're in version control.
-(setq vc-make-backup-files t)
+  (setq vc-make-backup-files t)
 
-;; Fix empty pasteboard error.
-(setq save-interprogram-paste-before-kill nil)
+  ;; Fix empty pasteboard error.
+  (setq save-interprogram-paste-before-kill nil)
 
 #+end_src
 
@@ -129,8 +129,8 @@ The next block is taken from here: https://github.com/frap/emacs-literate
 
 ** Font
 #+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist '(font . "JetBrains Mono-14" ))
-  (set-face-attribute 'default t :font "JetBrains Mono-14")
+  (add-to-list 'default-frame-alist '(font . "JetBrains Mono-15" ))
+  (set-face-attribute 'default t :font "JetBrains Mono-15")
 #+end_src
 
 #+RESULTS:
@@ -197,7 +197,7 @@ The next block is taken from here: https://github.com/frap/emacs-literate
 #+RESULTS:
 : t
 
-n* Sensible defaults
+* Sensible defaults
 Most of those are copied from https://github.com/hrs/sensible-defaults.el/blob/main/sensible-defaults.el
 For now I'm cherry picking what I want
 #+begin_src emacs-lisp
@@ -217,6 +217,9 @@ For now I'm cherry picking what I want
     (eval-buffer)
     (quelpa-self-upgrade)))
 #+end_src
+
+#+RESULTS:
+
 This package allow to use ~use-package~ with links to source
 
 #+begin_src emacs-lisp
@@ -226,6 +229,9 @@ This package allow to use ~use-package~ with links to source
    :url "https://github.com/quelpa/quelpa-use-package.git"))
 (require 'quelpa-use-package)
 #+end_src
+
+#+RESULTS:
+: quelpa-use-package
 
 * Completion
 I choose Vertico due to its simplicity and being light weight
@@ -282,10 +288,12 @@ Check this article https://karthinks.com/software/avy-can-do-anything/
 Wrap text
 #+begin_src emacs-lisp
   (add-hook 'org-mode-hook 'visual-line-mode)
+  (add-hook 'org-mode-hook #'auto-fill-mode)
+  (setq-default fill-column 80)
 #+end_src
 
 #+RESULTS:
-| visual-line-mode | turn-on-org-cdlatex | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes |
+: 80
 
 This remove the emphasis markers like ~=,/,*~
 #+begin_src emacs-lisp
@@ -308,32 +316,40 @@ This package replace the heading with UTF-8 symbols
 
 Use proportional font with different sizes for the heading
 #+begin_src emacs-lisp
-  (let* ((variable-tuple
-	    (cond                 
-		  ((x-list-fonts "JetBrains Mono")  '(:font "JetBrains Mono"))
-		  ((x-list-fonts "Arial")           '(:font "Arial"))
-		  ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
-		  ((x-list-fonts "Lucida Grande")   '(:font "Lucida Grande"))
-		  ((x-list-fonts "Verdana")         '(:font "Verdana"))
-		  ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
-		  (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
-	   (base-font-color     (face-foreground 'default nil 'default))
-	   (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
-
-      (custom-theme-set-faces
-       'user
-       `(org-level-8 ((t (,@headline ,@variable-tuple))))
-       `(org-level-7 ((t (,@headline ,@variable-tuple))))
-       `(org-level-6 ((t (,@headline ,@variable-tuple))))
-       `(org-level-5 ((t (,@headline ,@variable-tuple))))
-       `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
-       `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.2))))
-       `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.25))))
-       `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.35))))
-       `(org-document-title ((t (,@headline ,@variable-tuple :height 1.5 :underline nil)))))
-     )
+      (set-face-attribute 'default nil :family "JetBrains Mono" :height 140 :width 'normal)
+    (set-face-attribute 'fixed-pitch nil :family "JetBrains Mono" :height 140 :width 'normal)
+    (set-face-attribute 'variable-pitch nil :family "JetBrains Mono" :height 140 :weight 'medium) 
+  (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
 #+end_src
 
+# #+begin_src emacs-lisp :noeval
+#   (let* ((variable-tuple 
+# 	    (cond                 
+# 		  ((x-list-fonts "JetBrains Mono")  '(:font "JetBrains Mono"))
+# 		  ((x-list-fonts "Arial")           '(:font "Arial"))
+# 		  ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
+# 		  ((x-list-fonts "Lucida Grande")   '(:font "Lucida Grande"))
+# 		  ((x-list-fonts "Verdana")         '(:font "Verdana"))
+# 		  ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
+# 		  (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+# 	   (base-font-color     (face-foreground 'default nil 'default))
+# 	   (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+
+#       (custom-theme-set-faces
+#        'user
+#        `(org-level-8 ((t (,@headline ,@variable-tuple))))
+#        `(org-level-7 ((t (,@headline ,@variable-tuple))))
+#        `(org-level-6 ((t (,@headline ,@variable-tuple))))
+#        `(org-level-5 ((t (,@headline ,@variable-tuple))))
+#        `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
+#        `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.2))))
+#        `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.25))))
+#        `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.35))))
+#        `(org-document-title ((t (,@headline ,@variable-tuple :height 1.5 :underline nil)))))
+#      )
+# #+end_src
+ 
 #+RESULTS:
 
 #+begin_src emacs-lisp
@@ -389,7 +405,6 @@ Insert images from clipboard
 #+end_src
 
 #+RESULTS:
-| lambda | nil | (local-set-key (kbd $) 'cdlatex-dollar) |
 
 
 #+begin_src emacs-lisp
@@ -400,6 +415,15 @@ Insert images from clipboard
 
 #+RESULTS:
 | :foreground | default | :background | default | :scale | 2.0 | :html-foreground | Black | :html-background | Transparent | :html-scale | 1.0 | :matchers | (begin $1 $ $$ \( \[) |
+
+#+begin_src emacs-lisp
+ ;; (use-package org-tempo
+   ;;   :ensure t
+ ;; )
+
+#+end_src
+
+#+RESULTS:
 
 ** Org-roam
 #+begin_src emacs-lisp
@@ -447,6 +471,15 @@ Insert images from clipboard
 
 #+RESULTS:
 : completion-at-point
+* PDF
+#+begin_src emacs-lisp
+     (use-package pdf-tools
+      :defer t
+      :config
+	  (pdf-tools-install)
+	 (setq pdf-view-use-scaling  t)
+	  (setq-default pdf-view-display-size 'fit-page))
+#+end_src
 * LaTeX
 ** AUCTEX
 #+begin_src emacs-lisp
@@ -482,7 +515,7 @@ Insert images from clipboard
 #+end_src
 
 #+RESULTS:
-| (lambda nil (org-superstar-mode 1)) | visual-line-mode | turn-on-org-cdlatex | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes | f |
+| org-ref-org-menu | flycheck-languagetool-setup | turn-on-org-cdlatex | (lambda nil (org-superstar-mode 1)) | auto-fill-mode | visual-line-mode | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes |
 
 #+begin_src emacs-lisp
   (set-default 'preview-scale-function 1.2)
@@ -497,7 +530,7 @@ https://github.com/purcell/exec-path-from-shell
 #+end_src
 
 #+RESULTS:
-| /usr/local/texlive/2022/bin/universal-darwin: | /usr/local/texlive/2022/bin/universal-darwin: | /Applications/Visual Studio Code.app/Contents/Resources/app/bin | /opt/homebrew/bin | /opt/homebrew/sbin | /usr/local/bin | /usr/bin | /bin | /usr/sbin | /sbin | /Library/Apple/usr/bin | /opt/homebrew/Cellar/emacs-plus@29/29.0.50/libexec/emacs/29.0.50/aarch64-apple-darwin21.3.0 |
+| /usr/local/texlive/2022/bin/universal-darwin: | /usr/local/texlive/2022/bin/universal-darwin: | /Applications/Visual Studio Code.app/Contents/Resources/app/bin/ | /opt/local/bin/ | /opt/local/sbin/ | /opt/homebrew/bin/ | /opt/homebrew/sbin/ | /usr/local/bin/ | /usr/bin/ | /bin/ | /usr/sbin/ | /sbin/ | /Library/TeX/texbin/ | /Library/Apple/usr/bin/ | /Applications/Visual Studio Code.app/Contents/Resources/app/bin/ | /opt/homebrew/bin/ | /opt/homebrew/sbin/ | /opt/homebrew/Cellar/emacs-plus@29/29.0.50/libexec/emacs/29.0.50/aarch64-apple-darwin21.3.0/ |
 
 Add more symbols to ~cdlatex-math-symbol-alist~, make sure to ~cdlatex-reset-mode~ if the list is modifed after cdlatex has been loaded
 
@@ -527,12 +560,29 @@ Add more symbols to ~cdlatex-math-symbol-alist~, make sure to ~cdlatex-reset-mod
 	))
 #+end_src
 
+#+RESULTS:
+| axm | Insert axiom env      |   | cdlatex-environment | (axiom)      | t | nil |
+| thr | Insert theorem env    |   | cdlatex-environment | (theorem)    | t | nil |
+| def | Insert definition env |   | cdlatex-environment | (definition) | t | nil |
+| rem | Insert remark env     |   | cdlatex-environment | (remark)     | t | nil |
+| lem | Insert lemma env      |   | cdlatex-environment | (lemma)      | t | nil |
+| cor | Insert corollary env  |   | cdlatex-environment | (corollary)  | t | nil |
+| pro | Insert proof env      |   | cdlatex-environment | (proof)      | t | nil |
+| ex  | Insert example env    |   | cdlatex-environment | (example)    | t | nil |
+
 #+begin_src emacs-lisp
   (setq cdlatex-math-symbol-alist '(
 		(?n  ("\\nu" "\\lnot" "\\ln"))
 		))
+ (setq cdlatex-math-modify-alist '(
+	       (?l   "\\mathbb"      "" t   nil nil )
+		  ))
+  
   (require 'cdlatex)
 #+end_src
+
+#+RESULTS:
+: cdlatex
 
 ** Math delimiters
 #+begin_src emacs-lisp
@@ -546,6 +596,8 @@ Add more symbols to ~cdlatex-math-symbol-alist~, make sure to ~cdlatex-reset-mod
     )
 #+end_src
 
+#+RESULTS:
+
 ** Fast latex previews in Org
 #+begin_src emacs-lisp
   (use-package org-auctex
@@ -553,23 +605,102 @@ Add more symbols to ~cdlatex-math-symbol-alist~, make sure to ~cdlatex-reset-mod
     )
 #+end_src
 
-* Spell checker
+#+RESULTS:
+
+** Inkscape
 #+begin_src emacs-lisp
-  (use-package flycheck-languagetool
-  :ensure t
-  :hook ((text-mode . flycheck-languagetool-setup)
-	 (org-mode . flycheck-languagetool-setup))
-  :init
-  (setq flycheck-languagetool-url "http://localhost:8010")
-  (setq flycheck-languagetool-server-port "8010")
+  (use-package ink
+    :quelpa (ink :fetcher github :repo "/abdalazizrashid/ink")
   )
 
 #+end_src
+
+* Spell checker
+
+#+begin_src emacs-lisp
+  ;; (use-package flycheck-languagetool
+  ;; :ensure t
+  ;; :hook ((text-mode . flycheck-languagetool-setup)
+  ;;        (org-mode . flycheck-languagetool-setup))
+  ;; :init
+  ;; (setq flycheck-languagetool-url "http://localhost:8010")
+  ;; (setq flycheck-languagetool-server-port "8010")
+  ;; )
+
+#+end_src
+
 #+RESULTS:
-| flycheck-languagetool-setup | (lambda nil (org-superstar-mode 1)) | visual-line-mode | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes |
 
+#+begin_src emacs-lisp
+       (use-package languagetool
+       :ensure t
+       :defer t
+       :commands (languagetool-check
+		  languagetool-clear-suggestions
+		  languagetool-correct-at-point
+		  languagetool-correct-buffer
+		  languagetool-set-language
+		  languagetool-server-mode
+		  )
+      :config
+      (setq
+	languagetool-java-arguments '("-Dfile.encoding=UTF-8")
+	languagetool-server-host "http://devbox.ferres.ml/langtools"
+	languagetool-server-command "org.languagetool.server.HTTPServer"
+	languagetool-server-port "80"
+	)
+       )
+#+end_src
+#+RESULTS:
 
+* Reading mode
+From http://xahlee.info/emacs/emacs/emacs_novel_reading_mode.html
+#+begin_src emacs-lisp
+  (use-package visual-fill-column
+	    :ensure t
+	    :config
+	   ; (setq-default visual-fill-column-center-text t)
+	    (setq visual-fill-column-center-text t
+		  ;visual-fill-column-width
+		  )
+	 )
+#+end_src
 
+#+RESULTS:
+: t
+
+#+begin_src emacs-lisp
+  (defun reading-init ()
+    (visual-fill-column-mode)
+    (setq line-spacing 0.17)
+    (variable-pitch-mode)
+  )
+  
+  (add-hook 'org-mode-hook  'reading-init)
+#+end_src
+* Bibliographies
+#+begin_src emacs-lisp
+  (setq org-cite-global-bibliography '("~/bibliography.bib"))
+#+end_src
+
+#+RESULTS:
+| ~/bibliography.bib |
+
+#+begin_src emacs-lisp
+    (use-package org-ref
+    :ensure t
+    :custom
+    (org-ref-default-bibliography "~/bibliography.bib")
+    :config
+    ( setq bibtex-completion-bibliography '("~/bibliography.bib")))
+    ;; define key for inserting citations
+  (define-key org-mode-map
+    (kbd "C-c ]")
+    org-ref-insert-link-function)
+#+end_src
+
+#+RESULTS:
+: org-ref-insert-link
 
 * Feeds
 #+begin_src emacs-lisp
@@ -588,6 +719,8 @@ Add more symbols to ~cdlatex-math-symbol-alist~, make sure to ~cdlatex-reset-mod
   (setq rmh-elfeed-org-files (list "~/.emacs.d/elfeed.org"))
   )
 #+end_src
+
+#+RESULTS:
 
 from https://cundy.me/post/elfeed/
 
@@ -678,7 +811,7 @@ function; i.e., `elfeed-search-print-entry--default'."
          (title (or (elfeed-meta entry :title)
                     (elfeed-entry-title entry) ""))
          (title-faces (elfeed-search--faces (elfeed-entry-tags entry)))
-         (title-column (elfeed-format-column title 80 :left))
+         (title-column (elfeed-format-column title 120 :left))
 
          (entry-authors (s-join ", "
                                 (--map (plist-get it :name)
@@ -692,22 +825,19 @@ function; i.e., `elfeed-search-print-entry--default'."
          (feed (elfeed-entry-feed entry))
          (feed-column (let ((ft (or (elfeed-meta feed :title)
                                     (elfeed-feed-title feed))))
-                        (elfeed-format-column
-                         (cond ((s-matches? "math.AT" ft) "Algebraic Topology")
-                               ((s-matches? "math.CT" ft) "Category Theory")
-                               ((s-matches? "math.KT" ft) "Homological Algebra")
-                               ((s-matches? "math.QA" ft) "Quantum Algebra"))
-                         (1- (length "Homological Algebra"))
-                         :left))))
+          )))
     (insert (propertize date 'face 'elfeed-search-date-face) " ")
     (insert (propertize title-column 'face title-faces 'kbd-help title) " ")
-    (insert (propertize feed-column 'face 'elfeed-search-feed-face) " ")
+    ;(insert (propertize feed-column 'face 'elfeed-search-feed-face) " ")
     (insert (propertize authors-column 'kbd-help entry-authors) " ")
     (insert score " ")))
 
 (setq elfeed-search-print-entry-function #'slot/arXiv-print-entry)
 
 #+end_src
+
+#+RESULTS:
+: slot/arXiv-print-entry
 
 ** Scoring
 #+begin_src emacs-lisp
@@ -718,3 +848,14 @@ function; i.e., `elfeed-search-print-entry--default'."
     (elfeed-score-enable)
     (define-key elfeed-search-mode-map "=" elfeed-score-map)))
 #+end_src
+
+* SQL
+#+begin_src emacs-lisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((sql . t)))
+(setq org-confirm-babel-evaluate nil)
+
+#+end_src
+
+#+RESULTS:
